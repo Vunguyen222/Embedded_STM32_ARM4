@@ -1,0 +1,4 @@
+traffic_light_fsm.c:13:6:Light_control_road1	24	static
+traffic_light_fsm.c:39:6:Light_control_road2	24	static
+traffic_light_fsm.c:64:6:Traffic_light_fsm1	8	static
+traffic_light_fsm.c:97:6:Traffic_light_fsm2	8	static
