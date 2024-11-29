@@ -1,1 +1,1 @@
-# Embedded_STM32_ARM4
+# Embedded_STM32_ARM4_Lab8
