@@ -1,0 +1,14 @@
+main.c:102:5:main	8	static
+main.c:156:6:SystemClock_Config	88	static
+main.c:196:6:system_init	8	static
+main.c:207:6:updateTime	8	static
+main.c:217:9:isButtonUp	4	static
+main.c:224:9:isButtonDown	4	static
+main.c:231:7:returnMode	4	static
+main.c:249:6:checkTime	4	static
+main.c:289:6:checkAlarm	4	static
+main.c:329:6:displayTime	24	static
+main.c:342:6:modifyTime	24	static
+main.c:420:6:modifyAlarm	24	static
+main.c:498:6:fsm	40	static
+main.c:610:6:Error_Handler	4	static,ignoring_inline_asm
