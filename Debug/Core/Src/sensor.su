@@ -1,0 +1,7 @@
+sensor.c:14:6:sensor_init	8	static
+sensor.c:18:6:sensor_Read	8	static
+sensor.c:22:10:sensor_GetLight	4	static
+sensor.c:26:10:sensor_GetPotentiometer	4	static
+sensor.c:30:7:sensor_GetVoltage	8	static
+sensor.c:34:7:sensor_GetCurrent	8	static
+sensor.c:38:7:sensor_GetTemperature	4	static
