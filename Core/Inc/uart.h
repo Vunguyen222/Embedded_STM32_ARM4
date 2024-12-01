@@ -28,4 +28,6 @@ void uart2_SendString(uint8_t* str);
 
 void uart2_SendBytes(uint8_t* bytes, uint16_t size);
 
+void send_sensor_data_via_uart();
+
 #endif /* INC_UART_H_ */

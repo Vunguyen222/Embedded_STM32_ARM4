@@ -254,5 +254,21 @@ void timer_run()
 
 }
 
+int timer_15s_count = 0;
+int timer_15s_flag = 0;      // Cờ báo hiệu mỗi 15 giây
+void set_timer_15s(int delay) {
+    timer_15s_count = delay;
+}
+
+void timer_15s_callback() {
+    if (timer_15s_count > 0) {
+        timer_15s_count--;
+        if (timer_15s_count == 0) {
+            timer_15s_flag = 1;
+            set_timer_15s(15000); // Đặt lại Timer 15 giây
+        }
+    }
+}
+
 
 

@@ -55,4 +55,10 @@ void timer_send_temp_sensor_callback();
 
 void timer_run();
 
+void set_timer_15s(int delay);
+
+extern int timer_15s_count;
+extern int timer_15s_flag;      // Cờ báo hiệu mỗi 15 giây
+void timer_15s_callback();
+
 #endif /* INC_SOFTWARE_TIMER_H_ */

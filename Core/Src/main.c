@@ -79,13 +79,24 @@ static void MX_USART2_UART_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+// Kích thước màn hình LCD (giả định)
+#define LCD_WIDTH 128
+#define LCD_HEIGHT 64
 
+// Biến toàn cục
+float power_data[10] = {0}; // Lưu dữ liệu công suất tiêu thụ
+int current_index = 0;      // Vị trí hiện tại trong mảng dữ liệu
+
+// Hàm hỗ trợ
+void lcd_DrawPixel(int x, int y, int value);
+void update_graph_on_lcd(float POWER);
 /* USER CODE END 0 */
 
 /**
   * @brief  The application entry point.
   * @retval int
   */
+
 int main(void)
 {
   /* USER CODE BEGIN 1 */
@@ -136,14 +147,26 @@ int main(void)
 
   lcd_Clear(BLACK);
   /* USER CODE END 2 */
-
+  // Khai báo các hàm hỗ trợ
+  // Khởi tạo phần cứng
+  timer_init();       // Khởi tạo Timer
+  set_timer_15s(15000); // Đặt Timer 15 giây
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
 
   while (1)
   {
     /* USER CODE END WHILE */
+  // Kiểm tra cờ Timer mỗi 15 giây
+	  if (timer_15s_flag) {
+		 timer_15s_flag = 0;
 
+		 // Đọc dữ liệu công suất (giả lập)
+		 float POWER = sensor_GetVoltage() * sensor_GetCurrent();
+
+		 // Cập nhật biểu đồ
+		 update_graph_on_lcd(POWER);
+	 }
     /* USER CODE BEGIN 3 */
 	  if(timer_display_lcd_flag)
 	  {
@@ -180,8 +203,40 @@ int main(void)
 		  set_timer_send_temp_sensor(5000); /* 5000 ms */
 		  timer_send_temp_sensor_callback();
 	  }
+
+	  send_sensor_data_via_uart();
+
+	  HAL_Delay(1000); // Gửi mỗi giây
   }
   /* USER CODE END 3 */
+}
+// Hàm vẽ một điểm ảnh (pixel) trên LCD
+void lcd_DrawPixel(int x, int y, int value) {
+    if (x < 0 || x >= LCD_WIDTH || y < 0 || y >= LCD_HEIGHT) return; // Kiểm tra tọa độ hợp lệ
+
+    // Vẽ pixel (giả định bật/tắt pixel bằng GPIO)
+    HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0, value ? GPIO_PIN_SET : GPIO_PIN_RESET);
+}
+
+// Hàm cập nhật và vẽ biểu đồ trên LCD
+void update_graph_on_lcd(float POWER) {
+    // Cập nhật dữ liệu
+    power_data[current_index] = POWER;
+    current_index = (current_index + 1) % 10;
+
+    // Xóa màn hình
+    lcd_Clear(BLACK);
+
+    // Vẽ biểu đồ
+    for (int i = 0; i < 9; i++) {
+        int x1 = i * (LCD_WIDTH / 10);
+        int y1 = LCD_HEIGHT - (power_data[i] * LCD_HEIGHT / 100.0); // Chuẩn hóa theo chiều cao
+        int x2 = (i + 1) * (LCD_WIDTH / 10);
+        int y2 = LCD_HEIGHT - (power_data[i + 1] * LCD_HEIGHT / 100.0);
+
+        lcd_DrawPixel(x1, y1, 1); // Vẽ điểm đầu
+        lcd_DrawPixel(x2, y2, 1); // Vẽ điểm cuối
+    }
 }
 
 /**

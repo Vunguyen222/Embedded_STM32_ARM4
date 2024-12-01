@@ -77,3 +77,19 @@ void uart2_SendBytes(uint8_t* bytes, uint16_t size){
 	HAL_UART_Transmit(&huart2, bytes, size, 10);
 }
 
+void send_sensor_data_via_uart() {
+    uint8_t buffer[200];
+
+    // Chuẩn bị chuỗi dữ liệu
+    uint16_t length = sprintf((char*)buffer,
+        "Light: %d, Humidity: %.2f%%, Temp: %.2f°C, Voltage: %.2fV, Current: %.2fA\r\n",
+        light_sensor_value,
+        humidity_sensor_value,
+        temperature_sensor_value,
+        voltage_sensor_value,
+        current_sensor_value);
+
+    // Gửi qua UART
+    HAL_UART_Transmit(&huart1, buffer, length, 100);
+}
+

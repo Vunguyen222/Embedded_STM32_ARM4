@@ -6,3 +6,4 @@ uart.c:56:6:uart_Rs232SendNumPercent	16	static
 uart.c:67:6:uart_init_uart2	8	static
 uart.c:73:6:uart2_SendString	16	static
 uart.c:76:6:uart2_SendBytes	16	static
+uart.c:80:6:send_sensor_data_via_uart	264	static

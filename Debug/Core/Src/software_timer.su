@@ -12,3 +12,5 @@ software_timer.c:155:6:timer_scan_led_7seg_callback	8	static
 software_timer.c:166:6:set_timer_send_temp_sensor	16	static
 software_timer.c:171:6:timer_send_temp_sensor_callback	40	static
 software_timer.c:181:6:timer_run	4	static
+software_timer.c:259:6:set_timer_15s	16	static
+software_timer.c:263:6:timer_15s_callback	8	static
